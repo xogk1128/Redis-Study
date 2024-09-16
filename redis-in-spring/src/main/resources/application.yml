@@ -2,7 +2,7 @@ spring:
   profiles:
     defualt: local
   datasource:
-    url: jdbc:mysql://localhost:3306/mydb
+    url: jdbc:mysql://host.docker.internal:3306/mydb
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,9 +12,23 @@ spring:
     show-sql: true
   data:
     redis:
-      host: localhost
+      host: cache-server
       port: 6379
 
 logging:
   level:
     org.springframework.cache: trace # Redis 사용에 대한 로그가 조회되도록 설정
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: root
+  data:
+    redis:
+      host: cache-server
+      port: 6379
